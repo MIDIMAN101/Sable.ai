@@ -3,15 +3,20 @@ from google.cloud import storage
 from googleapiclient.discovery import build
 import vertexai
 from vertexai.generative_models import GenerativeModel
+from flask import Flask, request
 
 # --- CONFIGURATION ---
+# Replace these with your actual IDs and names
 DRIVE_FOLDER_ID = '1wcbvLrSl3fNyLxGWUwNKs6eeqndvIz1f' 
 BUCKET_NAME = 'sableai'
 PROJECT_ID = 'sable-ai-468204'
-REGION = 'australia-southeast2' # Or another region where Vertex AI is available
+REGION = 'australia-southeast2'
+
+# --- FLASK APPLICATION SETUP ---
+app = Flask(__name__)
 
 # --- MAIN FUNCTION ---
-def orchestrator(request):
+def orchestrator():
     """The main entry point for the Cloud Function."""
     
     # Initialize the clients
@@ -88,3 +93,8 @@ def orchestrator(request):
     except Exception as e:
         print(f"An error occurred: {e}")
         return str(e), 500
+
+# This line connects the function to a web route
+@app.route("/", methods=["POST", "GET"])
+def index():
+    return orchestrator()
