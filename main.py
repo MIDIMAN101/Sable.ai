@@ -37,6 +37,11 @@ def orchestrator():
             return "No files found in the folder.", 200
 
         for item in items:
+            # Check if the item is a folder and skip it
+            if item['mimeType'] == 'application/vnd.google-apps.folder':
+                print(f"Skipping folder: {item['name']}")
+                continue
+
             file_id = item['id']
             file_name = item['name']
             
@@ -98,3 +103,4 @@ def orchestrator():
 @app.route("/", methods=["POST", "GET"])
 def index():
     return orchestrator()
+
