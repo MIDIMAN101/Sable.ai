@@ -2,3 +2,6 @@ google-cloud-storage
 google-api-python-client
 google-auth
 google-cloud-aiplatform
+Flask
+gunicorn
+
